@@ -1,0 +1,16 @@
+﻿@model Wedding
+@{
+    ViewData["Title"] = $"{Model.WedderOne} and {Model.WedderTwo}'s Wedding";
+}
+
+<div>
+    <partial name="NavBar" view-data="ViewData" />
+    <h3>Adress: @Model.WeddingAdress</h3>
+    <h3>Date: @Model.WeddingDate.Date</h3>
+    <p>Guests: </p>
+    @foreach(var sub in Model.Attendees)
+    {
+        <p>@sub.User.FirstName @sub.User.LastName</p>
+    }
+</div>
+

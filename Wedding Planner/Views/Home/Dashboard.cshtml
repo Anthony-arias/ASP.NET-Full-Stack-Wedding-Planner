@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+@model List<Wedding>
+
+
+<div style="display: flex; justify-content: space-between">
+    <h2>Welcome to the Wedding Planner</h2>
+    <p>
+        <a href="/logout">Log Out</a>
+    </p>
+</div>
+<div>
+    <table style="width: 500px">
+        <tr>
+            <th>Wedding</th>
+            <th>Date</th>
+            <th>Guest</th>
+            <th>Action</th>
+        </tr>
+        @foreach (var wedding in Model)
+        {
+            <tr>
+                <td><a href="wedding/@wedding.WeddingId/info">@wedding.WedderOne & @wedding.WedderTwo</a></td>
+                <td>@wedding.WeddingDate.Date</td>
+                <td>@wedding.Attendees.Count</td>
+                <td>
+                    @{
+                        if(wedding.CreatedById == (int)TempData["LogedUser"])
+                        {
+                            <a asp-action="RemoveWedding" asp-controller="Weddings"
+                               asp-route-WeddingId="@wedding.WeddingId">Delete</a>
+                        }
+                        else if(wedding.Attendees.Any(wed => wed.UserId == (int)TempData["LogedUser"]))
+                        {
+                            <a asp-action="removeAttendeeFromWedding" asp-controller="Weddings"
+                               asp-route-WeddingId="@wedding.WeddingId" asp-route-UserId="@TempData["LogedUser"]">Un-RSVP</a>
+                        }
+                        else
+                        {
+
+                            <a asp-action="AddAttendeeToWedding" asp-controller="Weddings"
+                               asp-route-WeddingId="@wedding.WeddingId" asp-route-UserId="@TempData["LogedUser"]">RSVP</a>
+                        }
+                    }
+                </td>
+            </tr>
+        }
+    </table>
+    <a href="/wedding/create">New Wedding</a>
+</div>
+

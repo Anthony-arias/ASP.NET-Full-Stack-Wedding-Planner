@@ -1,0 +1,27 @@
+﻿
+@{
+    ViewData["Title"] = "Plan Your Wedding";
+}
+
+@model Wedding
+<div>
+    <partial name="NavBar" view-data="ViewData" />
+    <form asp-action="CreateWedding" asp-controller="Weddings" method="post">
+        <input asp-for="CreatedById" value=@TempData["LogedUser"] hidden/>
+        <span asp-validation-for="WedderOne"></span>
+        <label asp-for="WedderOne">Wedder One</label>
+        <input asp-for="WedderOne" /> <br />
+        <span asp-validation-for="WedderTwo"></span>
+        <label asp-for="WedderTwo">Wedder Two</label>
+        <input asp-for="WedderTwo" /> <br />
+        <span asp-validation-for="WeddingDate"></span>
+        <label asp-for="WeddingDate">Date</label>
+        <input asp-for="WeddingDate" /> <br />
+        <span asp-validation-for="WeddingAdress"></span>
+        <label asp-for="WeddingAdress">Wedding Address</label>
+        <input asp-for="WeddingAdress" /> <br />
+        <input type="submit" value="Create" />
+    </form>
+
+</div>
+
